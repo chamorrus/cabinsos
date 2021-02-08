@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Cabinsos - Customer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<p th:text="${customer.companyName}" />
+	<form action="#" th:action="@{/customers/{id}(id=${customer.id})}"
+		th:object="${customer}" method="post">
+		<p>
+			Company name: <input type="text" th:field="*{companyName}" />
+		</p>
+		<p>
+			First Name: <input type="text" th:field="*{firstName}" />
+		</p>
+		<p>
+			Last Name: <input type="text" th:field="*{lastName}" />
+		</p>
+		<p>
+			Email address: <input type="text" th:field="*{emailAddress}" />
+		</p>
+		<p>
+			<input type="submit" value="Update" />
+		</p>
+	</form>
+
+</body>
+</html>
