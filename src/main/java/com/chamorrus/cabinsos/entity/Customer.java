@@ -5,6 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Customer entity class. 
+ * 
+ * Each entity is identified by its id field which is automatically generated.
+ * 
+ * @author chamorrus
+ *
+ */
 @Entity
 public class Customer {
 

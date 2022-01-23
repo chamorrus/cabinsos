@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Cabinsos - Customer</title>
+<title>Cabinsos - Customer Detail</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -25,7 +25,8 @@
 		</p>
 	</form>
 	<p>
-		<a href="/customers/{id}(id=${customer.id})/menu">Edit menu</a>
+		<a th:href="@{/customers/{id}/menu(id=${customer.id})}"
+			class="btn btn-primary">Edit</a>
 	</p>
 </body>
 </html>

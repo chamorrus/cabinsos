@@ -6,6 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * This class loads development data for the web application to be tested. 
+ * 
+ * @author chamorrus
+ *
+ */
 @Configuration
 public class LoadDatabase {
 

@@ -2,15 +2,30 @@ package com.chamorrus.cabinsos.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chamorrus.cabinsos.entity.Customer;
 import com.chamorrus.cabinsos.entity.CustomerRepository;
 import com.chamorrus.cabinsos.exception.CustomerNotFoundException;
 
+/**
+ * Customer controller that will handle CRUD requests.
+ * 
+ * All the requests will be addressed to /customer/
+ * 
+ * The class {@link com.chamorrus.cabinsos.entity.CustomerRepository} contains
+ * the repository methods. The class
+ * {@link com.chamorrus.cabinsos.entity.Customer} describes the entity.
+ * 
+ * @author chamorrus
+ *
+ */
 @Controller
+@RequestMapping(value = "/customers")
 public class CustomerController {
 
 	private CustomerRepository repository;
@@ -19,19 +34,19 @@ public class CustomerController {
 		this.repository = repository;
 	}
 
-	@GetMapping("/customers")
+	@GetMapping("/")
 	public String getAllCustomers(Model model) {
 		model.addAttribute("customers", repository.findAll());
 		return "customers";
 	}
 
-	@GetMapping("/customers/{id}")
+	@GetMapping("/{id}")
 	public String getOneCustomer(@PathVariable Long id, Model model) {
 		model.addAttribute("customer", repository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id)));
 		return "customer_detail";
 	}
 
-	@PostMapping("/customers/{id}")
+	@PostMapping("/{id}")
 	public String updateCustomer(Customer updatedCustomer, @PathVariable Long id) {
 		Customer existingCustomer = repository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
 		existingCustomer.setCompanyName(updatedCustomer.getCompanyName());
@@ -39,23 +54,29 @@ public class CustomerController {
 		existingCustomer.setLastName(updatedCustomer.getLastName());
 		existingCustomer.setEmailAddress(updatedCustomer.getEmailAddress());
 		repository.save(existingCustomer);
-		return "redirect:/customers";
+		return "redirect:/customers/";
 	}
 
-	@GetMapping("/customers/new")
+	@GetMapping("/new")
 	public String createNewCustomer(Model model) {
 		model.addAttribute("customer", new Customer(null, null, null, null));
 		return "customer_new";
 	}
 
-	@PostMapping("/customers/new")
+	@PostMapping("/new")
 	public String saveNewCustomer(Customer customer) {
 		repository.save(customer);
-		return "redirect:/customers";
+		return "redirect:/customers/";
 	}
 
-	@GetMapping("/customers/{id}/menu")
+	@GetMapping("/{id}/menu")
 	public String getCustomerMenu(@PathVariable Long id, Model model) {
-		return "customer_detail";
+		System.out.println(");");
+		return "customer_menu";
+	}
+
+	@ExceptionHandler({ CustomerNotFoundException.class })
+	public String handleCustomerNotFoundException(Model model) {
+		return "customer_not_found";
 	}
 }
